@@ -1,23 +1,27 @@
 const fs = require("fs");
 const path = require("path");
 
-const handlers = {};
+const handler = {};
 
 handler.html = (request, response) => {
-  handler.staticFiles (request, response, "/index.html");
+  var file = 'index.html';
+  handler.staticFiles (request, response, file);
 };
 
 handler.staticFiles = (request, response, url) => {
+
+  let filePath = path.join(__dirname, '..', 'public', url);
   const extension = url.split(".")[1];
+  console.log(extension);
   const extensionType = {
     html : "text/html",
     css : "text/css",
-    js : "javascript/application"
+    js : "application/javascript"
   }[extension];
 
-  fs.readFile(__dirname + "../public/" + url, (error, file) => {
+  fs.readFile(filePath, (error, file) => {
     if(error) {
-      handleError(error, request, response);
+      handler.handleError(error, request, response);
     }
     response.writeHead(200, {"Context-Type" : extensionType});
     response.end(file);
@@ -35,4 +39,4 @@ handler.handleError = (error, request, response) => {
 
 
 
-module.exports = handlers;
+module.exports = handler;
