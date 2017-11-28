@@ -11,12 +11,11 @@ const routes = {
 function router (request, response) {
   if(routes[request.url]) {
     routes[request.url](request, response, request.url);
-  } else if (need to write model case) {
-
-  } else {
+  }
+  else {
     routes[404]("404, page not found", request, response);
   }
 }
 
 
-model.exports = router;
+module.exports = router;
