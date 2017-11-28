@@ -1,0 +1,10 @@
+.content {
+  display: block;
+  text-align: center;
+}
+
+canvas {
+  /*height: 500px;
+  width: 500px;*/
+  margin: 3%;
+}
