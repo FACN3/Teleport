@@ -1,0 +1,26 @@
+{
+  "name": "teleport",
+  "version": "1.0.0",
+  "description": "Small app that displays infos about a given city",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FACN3/Teleport.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FACN3/Teleport/issues"
+  },
+  "homepage": "https://github.com/FACN3/Teleport#readme",
+  "devDependencies": {
+    "eslint": "^4.12.0",
+    "nodemon": "^1.12.1",
+    "shot": "^4.0.4",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.8.0"
+  }
+}
