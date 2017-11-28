@@ -4,7 +4,7 @@
   "description": "Small app that displays infos about a given city",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/back-endTesting.js | tap-spec"
   },
   "repository": {
     "type": "git",
