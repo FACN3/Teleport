@@ -1,4 +1,4 @@
-const {home, staticFiles,handleRequest, handleError} = require("./handler.js");
+const {handleHome, handleStatic,handleRequest, handleError} = require("./handler.js");
 
 // const routes = {
 //   "/" : home,
@@ -12,13 +12,13 @@ const {home, staticFiles,handleRequest, handleError} = require("./handler.js");
 function router (request, response) {
   let baseUrl = request.url;
   if(baseUrl==="/") {
-    home(request, response);
-  }else if(url.pathname==='/submit'){
+    handleHome(request, response);
+  }else if(baseUrl.pathname==='/submit'){
     handleRequest(request,response);
   }
 
   else{
-    staticFiles(request, response);
+    handleStatic(request, response);
   }
 }
 

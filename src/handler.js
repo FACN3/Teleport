@@ -31,9 +31,10 @@ function handleStatic(request, response) {
   fs.readFile(filePath, (error, file) => {
     if(error) {
       handleError(error, request, response);
+    }else{
+      response.writeHead(200, {"Context-Type" : extensionType});
+      response.end(file);
     }
-    response.writeHead(200, {"Context-Type" : extensionType});
-    response.end(file);
   });
 };
 
