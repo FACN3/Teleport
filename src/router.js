@@ -11,13 +11,12 @@ const {handleHome, handleStatic,handleRequest, handleError} = require("./handler
 
 function router (request, response) {
   let baseUrl = request.url;
-  if(baseUrl==="/") {
+  if (baseUrl==="/") {
     handleHome(request, response);
-  }else if(baseUrl.pathname==='/submit'){
-    handleRequest(request,response);
-  }
 
-  else{
+  } else if(baseUrl.pathname==='/submit'){
+    handleRequest(request,response);
+  } else {
     handleStatic(request, response);
   }
 }

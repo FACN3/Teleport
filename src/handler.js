@@ -1,6 +1,8 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
+const req = require('request');
 
+let time_url = "https://api.xmltime.com/timeservice?accesskey=RZCuYAuoC3&expires=2017-11-29T10%3A55%3A01%2B00%3A00&signature=6w7yR8inwcK6e%2Fqur0fb5fKug5Y%3D&version=2&out=js&prettyprint=1&query=Oslo&geo=1&lang=en&time=1&sun=0&timechanges=0&tz=1&verbosetime=1"
 
 //handles the home route - /
 
@@ -43,6 +45,17 @@ function handleStatic(request, response) {
 
 function handleRequest(request , response){
 
+  let query = request.url;
+  let data = '';
+
+  req(time_url, (res) => {
+    res.on('data', (chunk) => {
+        data += chunk;
+    });
+    res.on('end', () => {
+      console.log(data);
+    });
+  });
 }
 
 //handles the Errors
