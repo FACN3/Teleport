@@ -45,7 +45,7 @@ function handleStatic(request, response) {
 
 //send an API request to other server
 function handleRequest(request , response){
-  var parallel =0;
+  // var parallel =0;
   let query = request.url.split('=')[1];
   let weather_url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=82e45ca76afa605e31bf2540d2afe634';
 
