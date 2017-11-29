@@ -1,4 +1,4 @@
-var path = require('path');
+// var path = require('path');
 //handles the xhr request
 function fetch(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -18,6 +18,7 @@ function fetch(url, callback) {
 function filterData() {
   var place = document.getElementById('cities').value;
   searchPath="/submit?search="+place;
+  // console.log(searchPath);
   fetch(searchPath, function(error, response) {
     if (error) {
       console.log("error with getting data from the server : ",error);
@@ -28,7 +29,8 @@ function filterData() {
 }
 
 //submitButton`s event listener
-document.getElementById('submitButton').addEventListener('submit', function(){
+document.getElementById('submitButton').addEventListener('click', function(){
+  event.preventDefault();
   filterData();
 });
 

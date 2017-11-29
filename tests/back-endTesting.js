@@ -29,8 +29,8 @@ test('Testing the router for the static files', (t) => {
 
 test('Testing the router for the time api', (t) => {
   shot.inject(router, { method: 'get', url: time_url }, (res) => {
-    t.equal(res.statusCode, 200, 'should respond with status code of 200 for the JS file');
-    t.notEqual(res.payload,undefined, 'response should contain a JS file');
+    t.equal(res.statusCode, 200, 'should respond with status code of 200 for the JSON data');
+    t.notEqual(res.payload,undefined, 'response should contain a JSON object');
   })
   t.end();
 })
