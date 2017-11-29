@@ -5,7 +5,7 @@ function fetch(url, callback) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       console.log(xhr.status);
-      callback(JSON.parse(xhr.responseText));
+      callback(null,JSON.parse(xhr.responseText));
     } else {
       console.log(xhr.readyState, xhr.status);
     }

@@ -2,6 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const req = require('request');
 
+//ogject that holds the data recieved
+const dataObj = {
+  'clock':"",
+  'weather': ""
+}
 //handles the home route - /
 
 function handleHome(request, response) {
@@ -42,21 +47,42 @@ function handleStatic(request, response) {
 //send an API request to other server
 
 function handleRequest(request , response){
-
+  var parallel =0;
   let query = request.url.split('=')[1];
-  console.log(query);
+  // console.log(query);
   let time_url = "https://api.xmltime.com/timeservice?accesskey=RZCuYAuoC3&expires=2017-11-29T10%3A55%3A01%2B00%3A00&signature=6w7yR8inwcK6e%2Fqur0fb5fKug5Y%3D&version=2&out=js&prettyprint=1&query=" + query + "&geo=1&lang=en&time=1&sun=0&timechanges=0&tz=1&verbosetime=1"
-  console.log(time_url);
-  let content;
+  let weather_url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query+'&appid=82e45ca76afa605e31bf2540d2afe634';
+  // console.log(time_url);
+  // let content;
 
   req(time_url, (error, res, body) => {
+      // console.log("ERROR: ",error);
     if (error) {
+      console.log("error wuth the recieved data : ", error.message);
       handleError(error, request, response);
     } else {
-    content = JSON.parse(body);
-    response.writeHead(200, {'Content-Type': 'application/json'});
-    console.log(content);
-    response.end(JSON.stringify(content));
+      parallel++;
+      console.log("TIME API RESPONSE:  ",body);
+      filterData(body,0);
+      if(parallel==2){
+        response.writeHead(200, {'Content-Type': 'application/json'});
+        response.end(JSON.stringify(dataObj));
+      }
+    }
+  });
+  req(weather_url, (error, res, body) => {
+      // console.log("ERROR: ",error);
+    if (error) {
+      console.log("error wuth the recieved data : ", error.message);
+      handleError(error, request, response);
+    } else {
+      parallel++;
+      console.log("WEATHER API RESPONSE:  ",body);
+      filterData(body,1);
+      if(parallel==2){
+        response.writeHead(200, {'Content-Type': 'application/json'});
+        response.end(JSON.stringify(dataObj));
+      }
     }
   });
 }
@@ -67,7 +93,17 @@ function handleError(error, request, response) {
   response.end("<h1>404 PAGE NOT FOUND </h1>");
 };
 
+//filters the data recieved by both apis
+function filterData(body,num){
+  body = JSON.parse(body);
+  if(num==0){
+    dataObj['clock']=JSON.stringify(body);
+  }
+  if(num==1){
+    dataObj['weather']=JSON.stringify(body);
+  }
 
+}
 
 
 
