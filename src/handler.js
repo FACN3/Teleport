@@ -7,8 +7,8 @@ const dataObj = {
   'clock':"",
   'weather': ""
 }
-//handles the home route - /
 
+//handles the home route - /
 function handleHome(request, response) {
   let filePath =path.join(__dirname,'..','public','index.html')  ;
   // handler.staticFiles (request, response, file);
@@ -23,7 +23,6 @@ function handleHome(request, response) {
 }
 
 //handles the rest of the public files
-
 function handleStatic(request, response) {
 
   let filePath = path.join(__dirname, '..', 'public', request.url);
@@ -45,31 +44,11 @@ function handleStatic(request, response) {
 };
 
 //send an API request to other server
-
 function handleRequest(request , response){
   var parallel =0;
   let query = request.url.split('=')[1];
-
-  // console.log(query);
   let weather_url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=82e45ca76afa605e31bf2540d2afe634';
-  // console.log(time_url);
-  // let content;
 
-  // req(time_url, (error, res, body) => {
-  //     // console.log("ERROR: ",error);
-  //   if (error) {
-  //     console.log("error wuth the recieved data : ", error.message);
-  //     handleError(error, request, response);
-  //   } else {
-  //     parallel++;
-  //     console.log("TIME API RESPONSE:  ",body);
-  //     filterData(body,0);
-  //     if(parallel==2){
-  //       response.writeHead(200, {'Content-Type': 'application/json'});
-  //       response.end(JSON.stringify(dataObj));
-  //     }
-  //   }
-  // });
   req(weather_url, (error, res, body) => {
       // console.log("ERROR: ",error);
     if (error) {
@@ -78,31 +57,24 @@ function handleRequest(request , response){
     } else {
       console.log("WEATHER API RESPONSE:  ",body);
       filterData(body,1);
+
       //sending the second api
       body = JSON.parse(body);
-      console.log(body);
       let lat = body.coord.lat;
       let long = body.coord.lon;
       let time_url = "http://api.timezonedb.com/v2/get-time-zone?key=UOEG6CXIM1AQ&format=json&by=position&lat=" + lat + "&lng=" + long;
 
       req(time_url, (error, res, body) => {
-          // console.log("ERROR: ",error);
         if (error) {
           console.log("error wuth the recieved data : ", error.message);
           handleError(error, request, response);
         } else {
           console.log("TIME API RESPONSE:  ",body);
           filterData(body,0);
-          // if(parallel==2){
-            response.writeHead(200, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify(dataObj));
-          // }
+          response.writeHead(200, {'Content-Type': 'application/json'});
+          response.end(JSON.stringify(dataObj));
         }
       });
-      // if(parallel==2){
-      //   response.writeHead(200, {'Content-Type': 'application/json'});
-      //   response.end(JSON.stringify(dataObj));
-      // }
     }
   });
 }
@@ -116,16 +88,14 @@ function handleError(error, request, response) {
 //filters the data recieved by both apis
 function filterData(body,num){
   body = JSON.parse(body);
-  if(num==0){
-    dataObj['clock']=JSON.stringify(body);
-  }
-  if(num==1){
-    dataObj['weather']=JSON.stringify(body);
-  }
 
+  if(num == 0){
+    dataObj['clock'] = JSON.stringify(body);
+  }
+  if(num == 1){
+    dataObj['weather'] = JSON.stringify(body);
+  }
 }
-
-
 
 module.exports = {
   handleHome,

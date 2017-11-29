@@ -1,11 +1,3 @@
-
-//handles the xhr request
-var now = new Date();
-const watch = {
-  'hours': now.getHours(),
-  'minutes': now.getMinutes(),
-  'seconds':now.getSeconds()
-}
 function keepRunning(){
   watch.seconds=watch.seconds+1;
   if(watch.seconds == 60){
@@ -21,11 +13,11 @@ function keepRunning(){
   }
 }
 
+//handles the xhr request
 function fetch(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
-      console.log(xhr.status);
       callback(null,JSON.parse(xhr.responseText));
     } else {
       console.log(xhr.readyState, xhr.status);
@@ -39,32 +31,32 @@ function fetch(url, callback) {
 function filterData() {
   var place = document.getElementById('cities').value;
   searchPath="/submit?search="+place;
-  // console.log(searchPath);
+
   fetch(searchPath, function(error, response) {
     if (error) {
       console.log("error with getting data from the server : ",error);
-    }else{
+    } else {
       var clock =JSON.parse(response.clock);
       var timeL=clock.formatted.split(" ")[1].split(":");
       watch.hours=parseInt(timeL[0]);
       watch.minutes=parseInt(timeL[1]);
       watch.seconds=parseInt(timeL[2]);
-      console.log(response);
       renderInfos(response);
     }
   });
 }
 
-//submitButton`s event listener
-document.getElementById('submitButton').addEventListener('click', function(){
-  event.preventDefault();
-  filterData();
-});
-
 //rendering the data
 function renderInfos(response) {
   var time_infos = JSON.parse(response.clock);
   var weather_infos = JSON.parse(response.weather);
+
+  // document.getElementById('weather').setAttribute("background-color", "#42f486");
+  // document.getElementById('other').setAttribute("background-color", "#f9f377");
+
+  document.getElementById('weather_infos').innerHTML = "";
+  document.getElementById('other_infos').innerHTML = "";
+  document.getElementById('weather_icon').setAttribute("src", "");
 
   var list_other = document.getElementById('other_infos');
 
@@ -88,7 +80,6 @@ function renderInfos(response) {
   var coords = document.createElement('li');
   coords.textContent = "Coordinates: " + latitude + ", " + longitude;
   list_other.appendChild(coords);
-  console.log(response);
 
   //------Weather Infos---------//
 
@@ -96,15 +87,15 @@ function renderInfos(response) {
   var weather_main = weather_infos.weather[0].description;
   var humidity = weather_infos.main.humidity;
   var wind_speed = weather_infos.wind.speed;
-  // var weather_icon = weather_infos.weather[0].icon;
+  var weather_icon = weather_infos.weather[0].icon;
 
   var list_weather = document.getElementById('weather_infos');
 
   var temp_display = document.createElement('li');
-  temp_display.textContent = "Current Temperature in F: " + temp_F;
+  temp_display.textContent = "Current Temperature: " + temp_F + "°F";
   list_weather.appendChild(temp_display);
   var weather_descript = document.createElement('li');
-  weather_descript.textContent = weather_main;
+  weather_descript.textContent = "Description: " + weather_main;
   list_weather.appendChild(weather_descript);
   var display_humid = document.createElement('li');
   display_humid.textContent = "Humidity: " + humidity + "%";
@@ -113,9 +104,7 @@ function renderInfos(response) {
   display_wind.textContent = "Wind Speed: " + wind_speed;
   list_weather.appendChild(display_wind);
 
-
-  // var icon = document.createElement('img');
-  // icon.setAttribute("src", weather_icon);
+  document.getElementById('weather_icon').setAttribute("src", "http://openweathermap.org/img/w/" + weather_icon + ".png");
 
 }
 
@@ -193,6 +182,19 @@ function drawClock() {
   drawNumbers(ctx, radius);
   drawTime(ctx, radius);
 }
+
+var now = new Date();
+const watch = {
+  'hours': now.getHours(),
+  'minutes': now.getMinutes(),
+  'seconds':now.getSeconds()
+}
+
+//submitButton`s event listener
+document.getElementById('submitButton').addEventListener('click', function(){
+  event.preventDefault();
+  filterData();
+});
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
