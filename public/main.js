@@ -1,5 +1,13 @@
 // var path = require('path');
 //handles the xhr request
+function myFunction() {
+    var d = new Date(Date.now());
+    var h = d.getHours();
+    var m = d.getMinutes();
+	var s = d.getSeconds();
+    document.getElementById("demo").innerHTML = h + " : "+m+" : "+s;
+}
+window.setInterval(myFunction, 1000);
 function fetch(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
