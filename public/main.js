@@ -37,12 +37,16 @@ document.getElementById('submitButton').addEventListener('click', function(){
 
 //rendering the data
 function renderInfos(response) {
+  var time_infos = JSON.parse(response.clock);
 
-  var city = response.locations[0].geo.name;
-  var country = response.locations[0].geo.country['name'];
-  var latitude = response.locations[0].geo.latitude;
-  var longitude = response.locations[0].geo.longitude;
-  var timezone = response.locations[0].time.timezone['zonename'];
+  var weather_infos = JSON.parse(response.weather);
+  console.log(weather_infos);
+
+  var city = time_infos.locations[0].geo.name;
+  var country = time_infos.locations[0].geo.country['name'];
+  var latitude = time_infos.locations[0].geo.latitude;
+  var longitude = time_infos.locations[0].geo.longitude;
+  var timezone = time_infos.locations[0].time.timezone['zonename'];
   console.log("city: " + city + " country: " + country + " coords: " + latitude + " " + longitude + " timezone: " + timezone);
 
   var list_infos = document.getElementById('other_infos');
@@ -58,6 +62,34 @@ function renderInfos(response) {
   var timezone_display = document.createElement('li');
   timezone_display.textContent = "Timezone: " + timezone;
   list_infos.appendChild(timezone_display);
+
+  //------Weather Infos---------//
+
+  var temp_F = weather_infos.main.temp;
+  var weather_main = weather_infos.weather[0].description;
+  var humidity = weather_infos.main.humidity;
+  var wind_speed = weather_infos.wind.speed;
+  // var weather_icon = weather_infos.weather[0].icon;
+
+  var list_weather = document.getElementById('weather_infos');
+
+  var temp_display = document.createElement('li');
+  temp_display.textContent = "Current Temperature in F: " + temp_F;
+  list_weather.appendChild(temp_display);
+  var weather_descript = document.createElement('li');
+  weather_descript.textContent = weather_main;
+  list_weather.appendChild(weather_descript);
+  var display_humid = document.createElement('li');
+  display_humid.textContent = "Humidity: " + humidity + "%";
+  list_weather.appendChild(display_humid);
+  var display_wind = document.createElement('li');
+  display_wind.textContent = "Wind Speed: " + wind_speed;
+  list_weather.appendChild(display_wind);
+
+
+  // var icon = document.createElement('img');
+  // icon.setAttribute("src", weather_icon);
+
 
 }
 
