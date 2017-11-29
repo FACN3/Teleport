@@ -1,10 +1,41 @@
-.content {
+body {
   display: block;
   text-align: center;
+  background-image: url("http://alamnature.com/wp-content/uploads/2017/03/Sunrise-Sunset-Egypt-Great-Pyramids-Giza-Nature-Landscapes-Pyramid-Free-Desktop-Background-Images.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 canvas {
   /*height: 500px;
   width: 500px;*/
   margin: 3%;
+}
+
+.content--other {
+  padding-bottom: 15%;
+}
+
+.content--other__infos {
+  list-style: none;
+  text-align: left;
+}
+
+.content--other__weather {
+  background-color: #42f486;
+  margin-left: 15%;
+  width: 30%;
+  height: 20%;
+  float: left;
+  border-radius: 25px;
+}
+
+.content--other__more {
+  background-color: #f9f377;
+  float: right;
+  width: 30%;
+  height: 20%;
+  margin-right: 15%;
+  border-radius: 25px;
 }
