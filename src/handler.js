@@ -46,15 +46,16 @@ function handleStatic(request, response) {
 function handleRequest(request , response){
 
   let query = request.url;
-  let data = '';
+  let content;
 
-  req(time_url, (res) => {
-    res.on('data', (chunk) => {
-        data += chunk;
-    });
-    res.on('end', () => {
-      console.log(data);
-    });
+  req(time_url, (error, res, body) => {
+    if (error) {
+      handleError(error, request, response);
+    } else {
+    content = JSON.parse(body);
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(content);
+    }
   });
 }
 
