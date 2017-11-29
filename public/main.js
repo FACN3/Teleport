@@ -1,14 +1,12 @@
-
+var path = require('path');
+//handles the xhr request
 function fetch(url, callback) {
-
   var xhr = new XMLHttpRequest();
-
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       console.log(xhr.status);
       callback(JSON.parse(xhr.responseText));
-    }
-    else {
+    } else {
       console.log(xhr.readyState, xhr.status);
     }
   };
@@ -16,6 +14,35 @@ function fetch(url, callback) {
   xhr.send();
 }
 
+//function that handles the data recieved from the server
+function filterData() {
+  var place = document.getElementById('cities').value;
+  searchPath="/submit?search="+place;
+  fetch(searchPath, function(error, response) {
+    if (error) {
+      console.log("error with getting data from the server : ",error);
+    }else{
+      console.log(response);
+    }
+  });
+}
+
+//submitButton`s event listener
+document.getElementById('submitButton').addEventListener('submit', function(){
+  filterData();
+});
+
+//rendering the data
+function renderInfos(){
+
+}
+
+//handling rendering the clock
+
+
+//handling rendering the weather
+
+//canvas drawing
 function drawClock() {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
@@ -25,16 +52,6 @@ function drawClock() {
   ctx.stroke();
 }
 
-function renderInfos() {
 
-  var place = document.getElementById('cities').value;
-
-  fetch(place, function(error, response) {
-    if (error) {
-      console.log(error);
-    }
-    console.log(response);
-  });
-}
 
 drawClock();
