@@ -51,8 +51,8 @@ function renderInfos(response) {
   var time_infos = JSON.parse(response.clock);
   var weather_infos = JSON.parse(response.weather);
 
-  // document.getElementById('weather').setAttribute("background-color", "#42f486");
-  // document.getElementById('other').setAttribute("background-color", "#f9f377");
+  document.getElementById('weather').style.backgroundColor = "#66d3ff";
+  document.getElementById('other').style.backgroundColor = "#d2d7dd";
 
   document.getElementById('weather_infos').innerHTML = "";
   document.getElementById('other_infos').innerHTML = "";
@@ -104,7 +104,7 @@ function renderInfos(response) {
   display_wind.textContent = "Wind Speed: " + wind_speed;
   list_weather.appendChild(display_wind);
 
-  document.getElementById('weather_icon').setAttribute("src", "http://openweathermap.org/img/w/" + weather_icon + ".png");
+  document.getElementById('weather_icon').src = "http://openweathermap.org/img/w/" + weather_icon + ".png";
 
 }
 
@@ -151,11 +151,23 @@ function drawTime(ctx, radius){
     var hour = watch.hours;
     var minute = watch.minutes;
     var second = watch.seconds;
+
+    if (hour > 18 || hour < 6) {
+      document.body.style.backgroundImage = "url('http://scromy.com/wp-content/uploads/2017/01/night-sky-wallpapers-phone.jpg')"
+      document.querySelector('.content__header__title').style.color = 'white';
+      document.querySelector('.content__header__tagline').style.color = 'white';
+    } else {
+      document.body.style.backgroundImage = "url('https://www.mycadsite.com/tutorials/level_3/images/sky.jpg')";
+      document.querySelector('.content__header__title').style.color = '#000000';
+      document.querySelector('.content__header__tagline').style.color = '#000000';
+    }
+
     //hour
-    hour=hour%12;
-    hour=(hour*Math.PI/6)+
+    hour = hour%12;
+    hour = (hour*Math.PI/6)+
     (minute*Math.PI/(6*60))+
     (second*Math.PI/(360*60));
+
     drawHand(ctx, hour, radius*0.5, radius*0.07);
     //minute
     minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));

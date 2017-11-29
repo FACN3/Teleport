@@ -1,7 +1,12 @@
+
+/* NIGHT TIME : http://scromy.com/wp-content/uploads/2017/01/night-sky-wallpapers-phone.jpg
+DAY TIME : https://www.mycadsite.com/tutorials/level_3/images/sky.jpg  */
+
 body {
   display: block;
   text-align: center;
-  background-image: url("http://alamnature.com/wp-content/uploads/2017/03/Sunrise-Sunset-Egypt-Great-Pyramids-Giza-Nature-Landscapes-Pyramid-Free-Desktop-Background-Images.jpg");
+  /*background-image: url("http://alamnature.com/wp-content/uploads/2017/03/Sunrise-Sunset-Egypt-Great-Pyramids-Giza-Nature-Landscapes-Pyramid-Free-Desktop-Background-Images.jpg");*/
+  background-color: lightblue;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -27,6 +32,12 @@ canvas {
   margin: 2% 3% 3% 3%;
 }
 
+ul {
+  font-size: 1em;
+  font-family: 'Exo 2', sans-serif;
+  /*margin: auto;*/
+}
+
 .content--other {
   padding-bottom: 15%;
 }
@@ -37,19 +48,17 @@ canvas {
 }
 
 .content--other__weather {
-  background-color: #42f486;
   margin-left: 15%;
   width: 30%;
-  height: 20%;
+  height: 40%;
   float: left;
   border-radius: 25px;
 }
 
 .content--other__more {
-  background-color: #f9f377;
   float: right;
   width: 30%;
-  height: 20%;
+  height: 40%;
   margin-right: 15%;
   border-radius: 25px;
 }
