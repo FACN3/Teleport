@@ -49,8 +49,9 @@ function handleStatic(request, response) {
 function handleRequest(request , response){
   var parallel =0;
   let query = request.url.split('=')[1];
+
   // console.log(query);
-  let time_url = "https://api.xmltime.com/timeservice?accesskey=RZCuYAuoC3&expires=2017-11-29T10%3A55%3A01%2B00%3A00&signature=6w7yR8inwcK6e%2Fqur0fb5fKug5Y%3D&version=2&out=js&prettyprint=1&query=" + query + "&geo=1&lang=en&time=1&sun=0&timechanges=0&tz=1&verbosetime=1"
+  let time_url = "https://api.xmltime.com/timeservice?accesskey=RZCuYAuoC3&timestamp=2017-11-29T11%3A12%3A03Z&signature=p5KPBdXxcFbK27E9Ynoyw0%2FLHJ4%3D&version=2&out=js&prettyprint=1&query=" + query + "&geo=1&lang=en&time=1&sun=0&timechanges=0&tz=1&verbosetime=1"
   let weather_url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query+'&appid=82e45ca76afa605e31bf2540d2afe634';
   // console.log(time_url);
   // let content;
