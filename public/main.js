@@ -1,14 +1,25 @@
 
 //handles the xhr request
-function currentTime() {
-    var d = new Date(Date.now());
-    var h = d.getHours();
-    var m = d.getMinutes();
-	var s = d.getSeconds();
-    document.getElementById("demo").innerHTML = h + " : "+m+" : "+s;
+var now = new Date();
+const watch = {
+  'hours': now.getHours(),
+  'minutes': now.getMinutes(),
+  'seconds':now.getSeconds()
 }
-
-window.setInterval(currentTime, 1000);
+function keepRunning(){
+  watch.seconds=watch.seconds+1;
+  if(watch.seconds == 60){
+    watch.seconds=0;
+    watch.minutes=watch.minutes+1;
+    if(watch.minutes==60){
+      watch.minutes=0;
+      watch.hours=watch.hours+1;
+      if(watch.hours==24){
+        watch.hours = 0;
+      }
+    }
+  }
+}
 
 function fetch(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -33,6 +44,11 @@ function filterData() {
     if (error) {
       console.log("error with getting data from the server : ",error);
     }else{
+      var clock =JSON.parse(response.clock);
+      var timeL=clock.formatted.split(" ")[1].split(":");
+      watch.hours=parseInt(timeL[0]);
+      watch.minutes=parseInt(timeL[1]);
+      watch.seconds=parseInt(timeL[2]);
       console.log(response);
       renderInfos(response);
     }
@@ -49,9 +65,6 @@ document.getElementById('submitButton').addEventListener('click', function(){
 function renderInfos(response) {
   var time_infos = JSON.parse(response.clock);
   var weather_infos = JSON.parse(response.weather);
-
-
-  //----Time Infos-----//
 
   var list_other = document.getElementById('other_infos');
 
@@ -104,7 +117,6 @@ function renderInfos(response) {
   // var icon = document.createElement('img');
   // icon.setAttribute("src", weather_icon);
 
-
 }
 
 function drawFace(ctx, radius) {
@@ -147,9 +159,9 @@ function drawNumbers(ctx, radius) {
 function drawTime(ctx, radius){
     var now = new Date();
     // console.log(now);
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var second = now.getSeconds();
+    var hour = watch.hours;
+    var minute = watch.minutes;
+    var second = watch.seconds;
     //hour
     hour=hour%12;
     hour=(hour*Math.PI/6)+
@@ -176,7 +188,7 @@ function drawHand(ctx, pos, length, width) {
 }
 
 function drawClock() {
-
+  keepRunning();
   drawFace(ctx, radius);
   drawNumbers(ctx, radius);
   drawTime(ctx, radius);
