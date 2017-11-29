@@ -1,13 +1,15 @@
 // var path = require('path');
 //handles the xhr request
-function myFunction() {
+function currentTime() {
     var d = new Date(Date.now());
     var h = d.getHours();
     var m = d.getMinutes();
 	var s = d.getSeconds();
     document.getElementById("demo").innerHTML = h + " : "+m+" : "+s;
 }
-window.setInterval(myFunction, 1000);
+
+window.setInterval(currentTime, 1000);
+
 function fetch(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
@@ -46,30 +48,12 @@ document.getElementById('submitButton').addEventListener('click', function(){
 //rendering the data
 function renderInfos(response) {
   var time_infos = JSON.parse(response.clock);
-
   var weather_infos = JSON.parse(response.weather);
-  console.log(weather_infos);
+  console.log(time_infos);
 
-  var city = time_infos.locations[0].geo.name;
-  var country = time_infos.locations[0].geo.country['name'];
-  var latitude = time_infos.locations[0].geo.latitude;
-  var longitude = time_infos.locations[0].geo.longitude;
-  var timezone = time_infos.locations[0].time.timezone['zonename'];
-  console.log("city: " + city + " country: " + country + " coords: " + latitude + " " + longitude + " timezone: " + timezone);
+  //----Time Infos-----//
 
-  var list_infos = document.getElementById('other_infos');
-  var city_display = document.createElement('li');
-  city_display.textContent = "City: " + city;
-  list_infos.appendChild(city_display);
-  var country_display = document.createElement('li');
-  country_display.textContent = "Country: " + country;
-  list_infos.appendChild(country_display);
-  var coords_display = document.createElement('li');
-  coords_display.textContent = "Coords: " + latitude + ", " + longitude;
-  list_infos.appendChild(coords_display);
-  var timezone_display = document.createElement('li');
-  timezone_display.textContent = "Timezone: " + timezone;
-  list_infos.appendChild(timezone_display);
+  
 
   //------Weather Infos---------//
 
@@ -101,21 +85,84 @@ function renderInfos(response) {
 
 }
 
-//handling rendering the clock
-
-
-//handling rendering the weather
-
-//canvas drawing
-function drawClock() {
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
-
+function drawFace(ctx, radius) {
+  var grad;
   ctx.beginPath();
-  ctx.arc(250, 250, 200, 0, Math.PI * 2, true);
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  grad.addColorStop(0, '#333');
+  grad.addColorStop(0.5, 'white');
+  grad.addColorStop(1, '#333');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
   ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  ctx.fillStyle = '#333';
+  ctx.fill();
 }
 
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius*0.15 + "px arial";
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
 
+function drawTime(ctx, radius){
+    var now = new Date();
+    // console.log(now);
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+
+    (minute*Math.PI/(6*60))+
+    (second*Math.PI/(360*60));
+    drawHand(ctx, hour, radius*0.5, radius*0.07);
+    //minute
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    drawHand(ctx, minute, radius*0.8, radius*0.07);
+    // second
+    second=(second*Math.PI/30);
+    drawHand(ctx, second, radius*0.9, radius*0.02);
+}
 
-drawClock();
+function drawHand(ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+}
+
+function drawClock() {
+
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
+}
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90
+setInterval(drawClock, 1000);
