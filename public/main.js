@@ -104,7 +104,7 @@ function renderInfos(response) {
   display_wind.textContent = "Wind Speed: " + wind_speed;
   list_weather.appendChild(display_wind);
 
-  document.getElementById('weather_icon').src = "http://openweathermap.org/img/w/" + weather_icon + ".png";
+  document.getElementById('weather_icon').src = "https://openweathermap.org/img/w/" + weather_icon + ".png";
 
 }
 
@@ -153,7 +153,7 @@ function drawTime(ctx, radius){
     var second = watch.seconds;
 
     if (hour > 18 || hour < 6) {
-      document.body.style.backgroundImage = "url('http://scromy.com/wp-content/uploads/2017/01/night-sky-wallpapers-phone.jpg')"
+      document.body.style.backgroundImage = "url('https://scromy.com/wp-content/uploads/2017/01/night-sky-wallpapers-phone.jpg')"
       document.querySelector('.content__header__title').style.color = 'white';
       document.querySelector('.content__header__tagline').style.color = 'white';
     } else {
