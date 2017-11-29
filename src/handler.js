@@ -51,8 +51,8 @@ function handleRequest(request , response){
   let query = request.url.split('=')[1];
 
   // console.log(query);
-  let time_url = "https://api.xmltime.com/timeservice?accesskey=RZCuYAuoC3&expires=2017-11-29T13%3A03%3A53%2B00%3A00&signature=94oCTRYYlklKSUEkLGi%2B6kGDMr4%3D&version=2&out=js&prettyprint=1&query=" + query + "&geo=1&lang=en&time=1&sun=0&timechanges=0&tz=1&verbosetime=1"
-  let weather_url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query+'&appid=82e45ca76afa605e31bf2540d2afe634';
+  let time_url = "https://api.xmltime.com/timeservice?accesskey=RZCuYAuoC3&timestamp=2017-11-29T13%3A18%3A46Z&signature=mduvNc1L1l3mDplHyMoADl8bf%2BM%3D&version=2&out=js&prettyprint=1&query=" + query + " &geo=1&lang=en&time=1&sun=0&timechanges=0&tz=1&verbosetime=1"
+  let weather_url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=82e45ca76afa605e31bf2540d2afe634';
   // console.log(time_url);
   // let content;
 
