@@ -5,7 +5,7 @@ function fetch(url, callback) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       console.log(xhr.status);
-      callback(JSON.parse(xhr.responseText));
+      callback(null, JSON.parse(xhr.responseText));
     } else {
       console.log(xhr.readyState, xhr.status);
     }
@@ -24,6 +24,7 @@ function filterData() {
       console.log("error with getting data from the server : ",error);
     }else{
       console.log(response);
+      renderInfos(response);
     }
   });
 }
@@ -35,7 +36,28 @@ document.getElementById('submitButton').addEventListener('click', function(){
 });
 
 //rendering the data
-function renderInfos(){
+function renderInfos(response) {
+
+  var city = response.locations[0].geo.name;
+  var country = response.locations[0].geo.country['name'];
+  var latitude = response.locations[0].geo.latitude;
+  var longitude = response.locations[0].geo.longitude;
+  var timezone = response.locations[0].time.timezone['zonename'];
+  console.log("city: " + city + " country: " + country + " coords: " + latitude + " " + longitude + " timezone: " + timezone);
+
+  var list_infos = document.getElementById('other_infos');
+  var city_display = document.createElement('li');
+  city_display.textContent = "City: " + city;
+  list_infos.appendChild(city_display);
+  var country_display = document.createElement('li');
+  country_display.textContent = "Country: " + country;
+  list_infos.appendChild(country_display);
+  var coords_display = document.createElement('li');
+  coords_display.textContent = "Coords: " + latitude + ", " + longitude;
+  list_infos.appendChild(coords_display);
+  var timezone_display = document.createElement('li');
+  timezone_display.textContent = "Timezone: " + timezone;
+  list_infos.appendChild(timezone_display);
 
 }
 
