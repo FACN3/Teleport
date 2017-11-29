@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="./style.css">
+  <link href="https://fonts.googleapis.com/css?family=Exo+2:500" rel="stylesheet">
   <title>Teleport</title>
 </head>
 <body>
   <section class="content">
     <div class="content__header">
       <h1 class="content__header__title">TeLePoRt</h1>
-      <h2>Just say the place and we will take you there!</h2>
+      <h2 class="content__header__tagline">Just say the place and we will take you there!</h2>
       <h3 id="demo"></h3>
     </div>
     <form>
@@ -25,12 +26,13 @@
     <div class="content--canvas__container">
       <canvas id="canvas" width="500px" height="500px"></canvas>
     </div>
-    <div class="content--other">
-    <div class="content--other__weather">
+    <div class="content--other" id="widgets">
+    <div class="content--other__weather" id="weather">
       <ul id="weather_infos" class="content--other__infos">
       </ul>
+      <img id="weather_icon" src="">
     </div>
-    <div class="content--other__more">
+    <div class="content--other__more" id="other">
       <ul id="other_infos" class="content--other__infos">
       </ul>
     </div>
