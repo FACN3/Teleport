@@ -1,18 +1,27 @@
 const fs = require("fs");
 const path = require("path");
 
-const handler = {};
 
-handler.html = (request, response) => {
-  var file = 'index.html';
-  handler.staticFiles (request, response, file);
-};
+//handles the home route - /
 
-handler.staticFiles = (request, response, url) => {
+function handleHome(request, response) {
+  let filePath =path.join(__dirname,'..','public','index.html')  ;
+  // handler.staticFiles (request, response, file);
+  fs.readFile(filePath, (error, file) => {
+    if(error) {
+      handleError(error, request, response);
+    }
+    response.writeHead(200, {"Context-Type" : 'text/html'});
+    response.end(file);
+  });
+}
 
-  let filePath = path.join(__dirname, '..', 'public', url);
-  const extension = url.split(".")[1];
-  console.log(extension);
+//handles the rest of the public files
+
+function handleStatic(request, response) {
+
+  let filePath = path.join(__dirname, '..', 'public', request.url);
+  const extension = request.url.split(".")[1];
   const extensionType = {
     html : "text/html",
     css : "text/css",
@@ -21,22 +30,33 @@ handler.staticFiles = (request, response, url) => {
 
   fs.readFile(filePath, (error, file) => {
     if(error) {
-      handler.handleError(error, request, response);
+      handleError(error, request, response);
+    }else{
+      response.writeHead(200, {"Context-Type" : extensionType});
+      response.end(file);
     }
-    response.writeHead(200, {"Context-Type" : extensionType});
-    response.end(file);
   });
 };
 
-//handler.model -> needs to be written
+//send an API request to other server
 
-handler.handleError = (error, request, response) => {
+function handleRequest(request , response){
+
+}
+
+//handles the Errors
+function handleError(error, request, response) {
   response.writeHead(404, {"Content-Type" : "text/html"});
-  response.end("An error has occured", error);
+  response.end("<h1>404 PAGE NOT FOUND </h1>");
 };
 
 
 
 
 
-module.exports = handler;
+module.exports = {
+  handleHome,
+  handleStatic,
+  handleRequest,
+  handleError
+};
