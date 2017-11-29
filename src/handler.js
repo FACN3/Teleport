@@ -10,9 +10,10 @@ function handleHome(request, response) {
   fs.readFile(filePath, (error, file) => {
     if(error) {
       handleError(error, request, response);
-    }
+    } else {
     response.writeHead(200, {"Context-Type" : 'text/html'});
     response.end(file);
+    }
   });
 }
 
