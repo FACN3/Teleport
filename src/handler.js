@@ -51,39 +51,58 @@ function handleRequest(request , response){
   let query = request.url.split('=')[1];
 
   // console.log(query);
-  let time_url = "https://api.xmltime.com/timeservice?accesskey=RZCuYAuoC3&timestamp=2017-11-29T13%3A18%3A46Z&signature=mduvNc1L1l3mDplHyMoADl8bf%2BM%3D&version=2&out=js&prettyprint=1&query=" + query + " &geo=1&lang=en&time=1&sun=0&timechanges=0&tz=1&verbosetime=1"
   let weather_url = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=82e45ca76afa605e31bf2540d2afe634';
   // console.log(time_url);
   // let content;
 
-  req(time_url, (error, res, body) => {
-      // console.log("ERROR: ",error);
-    if (error) {
-      console.log("error wuth the recieved data : ", error.message);
-      handleError(error, request, response);
-    } else {
-      parallel++;
-      console.log("TIME API RESPONSE:  ",body);
-      filterData(body,0);
-      if(parallel==2){
-        response.writeHead(200, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify(dataObj));
-      }
-    }
-  });
+  // req(time_url, (error, res, body) => {
+  //     // console.log("ERROR: ",error);
+  //   if (error) {
+  //     console.log("error wuth the recieved data : ", error.message);
+  //     handleError(error, request, response);
+  //   } else {
+  //     parallel++;
+  //     console.log("TIME API RESPONSE:  ",body);
+  //     filterData(body,0);
+  //     if(parallel==2){
+  //       response.writeHead(200, {'Content-Type': 'application/json'});
+  //       response.end(JSON.stringify(dataObj));
+  //     }
+  //   }
+  // });
   req(weather_url, (error, res, body) => {
       // console.log("ERROR: ",error);
     if (error) {
       console.log("error wuth the recieved data : ", error.message);
       handleError(error, request, response);
     } else {
-      parallel++;
       console.log("WEATHER API RESPONSE:  ",body);
       filterData(body,1);
-      if(parallel==2){
-        response.writeHead(200, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify(dataObj));
-      }
+      //sending the second api
+      body = JSON.parse(body);
+      console.log(body);
+      let lat = body.coord.lat;
+      let long = body.coord.lon;
+      let time_url = "http://api.timezonedb.com/v2/get-time-zone?key=UOEG6CXIM1AQ&format=json&by=position&lat=" + lat + "&lng=" + long;
+
+      req(time_url, (error, res, body) => {
+          // console.log("ERROR: ",error);
+        if (error) {
+          console.log("error wuth the recieved data : ", error.message);
+          handleError(error, request, response);
+        } else {
+          console.log("TIME API RESPONSE:  ",body);
+          filterData(body,0);
+          // if(parallel==2){
+            response.writeHead(200, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify(dataObj));
+          // }
+        }
+      });
+      // if(parallel==2){
+      //   response.writeHead(200, {'Content-Type': 'application/json'});
+      //   response.end(JSON.stringify(dataObj));
+      // }
     }
   });
 }
