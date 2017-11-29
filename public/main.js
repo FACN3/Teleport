@@ -1,4 +1,4 @@
-// var path = require('path');
+
 //handles the xhr request
 var now = new Date();
 const watch = {
@@ -20,9 +20,6 @@ function keepRunning(){
     }
   }
 }
-
-
-
 
 function fetch(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -68,11 +65,30 @@ document.getElementById('submitButton').addEventListener('click', function(){
 function renderInfos(response) {
   var time_infos = JSON.parse(response.clock);
   var weather_infos = JSON.parse(response.weather);
-  console.log(time_infos);
 
-  //----Time Infos-----//
+  var list_other = document.getElementById('other_infos');
 
+  var timestamp = time_infos.formatted;
+  var display_time = document.createElement('li');
+  display_time.textContent = "Date and Time: " + timestamp;
+  list_other.appendChild(display_time);
 
+  var city = time_infos.zoneName;
+  var display_city = document.createElement('li');
+  display_city.textContent = "Zone: " + city;
+  list_other.appendChild(display_city);
+
+  var country = time_infos.countryName;
+  var display_country = document.createElement('li');
+  display_country.textContent = "Country: " + country;
+  list_other.appendChild(display_country);
+
+  var latitude = weather_infos.coord.lat;
+  var longitude = weather_infos.coord.lon;
+  var coords = document.createElement('li');
+  coords.textContent = "Coordinates: " + latitude + ", " + longitude;
+  list_other.appendChild(coords);
+  console.log(response);
 
   //------Weather Infos---------//
 
@@ -100,7 +116,6 @@ function renderInfos(response) {
 
   // var icon = document.createElement('img');
   // icon.setAttribute("src", weather_icon);
-
 
 }
 
