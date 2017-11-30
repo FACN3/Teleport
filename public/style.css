@@ -68,6 +68,7 @@ ul {
 }
 
 .content--other__weather {
+  color: white;
   margin-left: 15%;
   width: 30%;
   height: 40%;
