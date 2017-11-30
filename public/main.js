@@ -54,6 +54,7 @@ function filterData() {
       watch.minutes = parseInt(timeL[1]);
       watch.seconds = parseInt(timeL[2]);
       renderInfos(response);
+      console.log(response);
     }
   });
 }
