@@ -90,6 +90,21 @@ function renderInfos(response) {
   var weather_icon = weather_infos.weather[0].icon;
 
   var list_weather = document.getElementById('weather_infos');
+  console.log(weather_infos.weather[0].main);
+
+  if(weather_infos.weather[0].main.indexOf('Cloud')!=-1){
+    document.getElementById('weather').style.backgroundImage= "url('https://media.giphy.com/media/13bGgH9VnEDsuA/giphy.gif')";
+  }
+  if(weather_infos.weather[0].main.indexOf('Clear')!=-1){
+    document.getElementById('weather').style.backgroundImage= "url('http://1.bp.blogspot.com/-cNFdtozkuwY/U1CdTgblmVI/AAAAAAAABKM/yyGv2dHIrXE/s1600/GIF_SkyClear.gif')";
+  }
+  if(weather_infos.weather[0].main.indexOf('Haze')!=-1){
+    document.getElementById('weather').style.backgroundImage= "url('http://weloveweather.tv/wp-content/uploads/2016/08/PhobiasFog.gif')";
+    document.getElementById('weather').style.backgroundSize= 'cover';
+  }
+  if(weather_infos.weather[0].main.indexOf('Rain')!=-1){
+    document.getElementById('weather').style.backgroundImage= "url('https://media.giphy.com/media/PbOaO2fedzQLm/giphy.gif')";
+  }
 
   var temp_display = document.createElement('li');
   temp_display.textContent = 'Current Temperature: ' + temp_F + '°F';
