@@ -1,19 +1,16 @@
-const {handleHome, handleStatic,handleRequest, handleError} = require("./handler.js");
+const handleHome = require('./handlers/handleHome');
+const handleStatic = require('./handlers/handleStatic');
+const handleRequest = require('./handlers/handleRequests');
 
-function router (request, response) {
+const router = (request, response) => {
   let baseUrl = request.url;
-  if (baseUrl === "/") {
-    // console.log(baseUrl);
+  if (baseUrl === '/') {
     handleHome(request, response);
-
   } else if (baseUrl.split('?')[0] === '/submit') {
-    // console.log(baseUrl);
-    handleRequest(request,response);
-
+    handleRequest(request, response);
   } else {
-    // console.log(baseUrl);
     handleStatic(request, response);
   }
-}
+};
 
 module.exports = router;
