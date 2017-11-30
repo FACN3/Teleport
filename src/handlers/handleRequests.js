@@ -7,16 +7,6 @@ const dataObj = {
   weather: '',
 };
 
-// filters the data recieved by both apis
-function filterData(body, num) {
-  if (num === 0) {
-    dataObj.clock = body;
-  }
-  if (num === 1) {
-    dataObj.weather = body;
-  }
-}
-
 // send an API request to other server
 const handleRequest = (request, response) => {
   const query = request.url.split('=')[1];
@@ -31,7 +21,8 @@ const handleRequest = (request, response) => {
       if (error) {
         handleError(error, request, response);
       } else {
-        filterData(body, 1);
+        console.log(body);
+        dataObj.weather = body;
 
         // sending the second api
         const parsedBody = JSON.parse(body);
@@ -45,7 +36,7 @@ const handleRequest = (request, response) => {
           if (err) {
             handleError(err, request, response);
           } else {
-            filterData(timeBody, 0);
+            dataObj.clock = timeBody;
             response.writeHead(200, { 'Content-Type': 'application/json' });
             response.end(JSON.stringify(dataObj));
           }
