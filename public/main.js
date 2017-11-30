@@ -108,6 +108,7 @@ function renderInfos(response) {
     "https://openweathermap.org/img/w/" + weather_icon + ".png";
 }
 
+
 function drawFace(ctx, radius) {
   var grad;
   ctx.beginPath();
