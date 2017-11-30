@@ -4,7 +4,6 @@ DAY TIME : https://www.mycadsite.com/tutorials/level_3/images/sky.jpg  */
 body {
   display: block;
   text-align: center;
-  /*background-image: url("http://alamnature.com/wp-content/uploads/2017/03/Sunrise-Sunset-Egypt-Great-Pyramids-Giza-Nature-Landscapes-Pyramid-Free-Desktop-Background-Images.jpg");*/
   background-color: lightblue;
   background-position: center;
   background-repeat: no-repeat;
@@ -22,6 +21,29 @@ body {
   font-family: 'Exo 2', sans-serif;
   font-size: 3em;
   margin-top: 2%;
+}
+
+.content__form {
+  font-size: 1.5em;
+}
+
+.content__form--menu {
+  font-size: 1.5rem;
+  opacity: 0.7;
+}
+
+.content__submit {
+  font-size: 1.5rem;
+  border-radius: 10px;
+  padding: 0.8%;
+  font-family: 'Exo 2', sans-serif;
+  opacity: 0.7;
+}
+
+button:hover {
+  background-color: lightblue;
+  border: none;
+  transition-duration: 0.4s;
 }
 
 canvas {

@@ -10,6 +10,7 @@ const handleStatic = (request, response) => {
     html: 'text/html',
     css: 'text/css',
     js: 'application/javascript',
+    ico: 'image/x-icon',
   }[extension];
 
   fs.readFile(filePath, (error, file) => {

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="./style.css">
   <link href="https://fonts.googleapis.com/css?family=Exo+2:500" rel="stylesheet">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <title>Teleport</title>
 </head>
 <body>
@@ -13,8 +14,8 @@
       <h2 class="content__header__tagline">Just say the place and we will take you there!</h2>
       <h3 id="demo"></h3>
     </div>
-    <form>
-      <select id="cities">
+    <form class="content__form">
+      <select class="content__form--menu" id="cities">
         <option value="ChooseCity" selected>Choose a city</option>
         <option value="Amsterdam">Amesterdam, Netherlands</option>
         <option value="Chicago">Chicago, USA</option>
@@ -38,7 +39,7 @@
         <option value="Sydney">Sydney, Australia</option>
         <option value="Tel Aviv">Tel Aviv, Israel</option>
       </select>
-      <button type="submit" id='submitButton'>Take me there!</button>
+      <button type="submit" class="content__submit" id='submitButton'>Take me there!</button>
     </form>
     <div class="content--canvas__container">
       <canvas id="canvas" width="500px" height="500px"></canvas>
