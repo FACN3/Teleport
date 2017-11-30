@@ -1,3 +1,11 @@
+function onError(status) {
+  if (status === 404) {
+    alert("File Not Found");
+  } else {
+    alert("We are sorry, there was an error on our side");
+  }
+}
+
 function keepRunning() {
   watch.seconds = watch.seconds + 1;
   if (watch.seconds == 60) {
@@ -19,6 +27,9 @@ function fetch(url, callback) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       callback(null, JSON.parse(xhr.responseText));
+    } else if (xhr.status !== 200){
+      callback(xhr.status);
+      console.log(xhr.readyState, xhr.status);
     } else {
       console.log(xhr.readyState, xhr.status);
     }
@@ -34,8 +45,9 @@ function filterData() {
 
   fetch(searchPath, function(error, response) {
     if (error) {
+      onError(response);
       console.log('error with getting data from the server : ', error);
-    } else {
+    } else if (response) {
       var clock = JSON.parse(response.clock);
       var timeL = clock.formatted.split(' ')[1].split(':');
       watch.hours = parseInt(timeL[0]);
@@ -50,7 +62,6 @@ function filterData() {
 function renderInfos(response) {
   var time_infos = JSON.parse(response.clock);
   var weather_infos = JSON.parse(response.weather);
-
   document.getElementById('weather').style.backgroundColor = '#66d3ff';
   document.getElementById('other').style.backgroundColor = '#d2d7dd';
 
