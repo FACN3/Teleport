@@ -21,7 +21,6 @@ const handleRequest = (request, response) => {
       if (error) {
         handleError(error, request, response);
       } else {
-        console.log(body);
         dataObj.weather = body;
 
         // sending the second api

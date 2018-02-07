@@ -182,7 +182,8 @@ function drawTime(ctx, radius) {
 
   if (hour > 18 || hour < 6) {
     document.body.style.backgroundImage =
-      "url('https://scromy.com/wp-content/uploads/2017/01/night-sky-wallpapers-phone.jpg')";
+      //"url('https://scromy.com/wp-content/uploads/2017/01/night-sky-wallpapers-phone.jpg')";
+      "url('https://i.ytimg.com/vi/arMu4f8rnBk/maxresdefault.jpg')";
     document.querySelector('.content__header__title').style.color = 'white';
     document.querySelector('.content__header__tagline').style.color = 'white';
   } else {
